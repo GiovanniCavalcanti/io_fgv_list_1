@@ -1,0 +1,255 @@
+---
+title: "Exercise 1.2, Structural Econometrics"
+author: "Giovanni Cavalcanti"
+date: "2024-05-15"
+output:
+  pdf_document: 
+    extra_dependencies: ["fullpage", "amsmath", "amssymb", "amsthm", "enumitem", "cancel", "amsfonts", "inputenc", "xcolor", "mathtools", "pgfplots", "tikz"] 
+    latex_engine: xelatex
+  html_document:
+    df_print: paged
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+rm(list = ls())
+gc()
+
+library(tidyverse)
+library(gridExtra)
+library(dplyr)
+library(purrr)
+
+travelmode_wide <- read_csv("travelmode_ps1.csv", 
+    col_types = cols(urban = col_factor(levels = c("0", "1", "2")),
+                     choice = col_factor(levels = c("air", "car", "train", "bus"))))
+```
+
+# Problem 2: Maximum Likelihood Estimation
+
+------------------------------------------------------------------------
+
+We are again studying how Canadians choose their mode of travel in the Montreal-Toronto corridor — but we are now estimating the model "by hand" to better understand the maximum likelihood estimation method. This problem requires you to code your own estimators, rather than using R's "canned" routines (e.g., `glm()` and `mlogit()`).
+
+### a. Model individuals' choice as a multinomial logit model.
+
+Express the representative utility of each alternative as a linear function of its cost and time with common parameters on these variables. Also add alternative-specific intercepts for all but one alternative. That is, the representative utility to individual i from alternative j is
+
+$$ V_{ij} = \alpha_j + \beta C_{ij} + \gamma T_{ij} $$
+
+where $C_{ij}$ is the cost to individual i of alternative j, $T_{ij}$ is the time for individual i of alternative j, and the $\alpha, \beta,$ and $\gamma$ parameters are to be estimated. Estimate the parameters of this model by maximum likelihood estimation. The following steps can provide a rough guide to creating your own maximum likelihood estimator:
+
+1.  **Create a function that takes a set of parameters and data as inputs:**
+
+    ``` r
+    function(parameters, data)
+    ```
+
+2.  **Within that function, make the following calculations:**
+
+    1.  Calculate the representative utility of every alternative for each decision maker.
+    2.  Calculate the choice probability of the chosen alternative for each decision maker.
+    3.  Take the log of those probabilities to get the log-likelihood.
+    4.  Return the negative of the log-likelihood.
+
+3.  **Maximize the log-likelihood (by minimizing its negative) using `optim()`. Call your version of the `optim()` function something like this:**
+
+    ``` r
+    optim(par = your_starting_guesses, fn = your_function, data = your_data,
+    method = "BFGS", hessian = TRUE)
+    ```
+
+4.  **Report your parameter estimates, standard errors, z-stats, and p-values. Briefly interpret these results. For example, what does each parameter mean?**
+
+**Solutions**
+
+```{r}
+
+# Define the log-likelihood function
+ll_function <- function(parameters, data, choice_col, time_cols, cost_cols) {
+  # Extract parameters
+  alpha <- parameters[1:(length(time_cols) - 1)]
+  b_time <- parameters[length(time_cols)]
+  b_cost <- parameters[length(time_cols) + 1]
+  
+  # Initialize utilities data frame
+  utilities <- matrix(0, nrow = nrow(data), ncol = length(time_cols))
+  
+  # Calculate utilities for each alternative
+  for (j in 1:(length(time_cols) - 1)) {
+    utilities[, j] <- alpha[j] + b_time * data[[time_cols[j]]] + b_cost * data[[cost_cols[j]]]
+  }
+  # Utility for the base alternative (train)
+  utilities[, length(time_cols)] <- b_time * data[[time_cols[length(time_cols)]]] +
+    b_cost * data[[cost_cols[length(cost_cols)]]]
+  
+  # Convert to data frame for further calculations
+  utilities <- as.data.frame(utilities)
+  colnames(utilities) <- c('utility_air', 'utility_car',
+                           'utility_bus', 'utility_train')
+  
+  # Calculate choice probabilities
+  exp_utilities <- exp(utilities)
+  denom <- rowSums(exp_utilities)
+  probabilities <- exp_utilities / denom
+  
+  # Get the choice probabilities for the chosen alternatives
+  chosen_probs <- mapply(function(row, choice) probabilities[row, choice],
+                         seq_len(nrow(data)),
+                         match(data[[choice_col]],
+                               c('air', 'car', 'bus', 'train')))
+  
+  # Calculate the log-likelihood
+  log_likelihood <- sum(log(chosen_probs))
+  
+  return(-log_likelihood)
+}
+
+# Define the model fitting function
+fit_mnl_model <- function(data, choice_col, time_cols, cost_cols, initial_params) {
+  ll_func <- function(params) ll_function(params, data, choice_col, time_cols, cost_cols)
+  result <- optim(par = initial_params, fn = ll_func, method = 'BFGS', hessian = TRUE)
+  
+  # Create a named vector for parameter estimates
+  param_names <- c(paste0('alpha_', c('air', 'car', 'bus')), 'b_time', 'b_cost')
+  names(result$par) <- param_names
+  
+  # Calculate standard errors, z-stats, and p-values
+  standard_errors <- sqrt(diag(solve(result$hessian)))
+  z_stats <- result$par / standard_errors
+  p_values <- 2 * (1 - pnorm(abs(z_stats)))
+  
+  summary_table <- data.frame(
+    Estimate = result$par,
+    Std_Error = standard_errors,
+    Z_Stat = z_stats,
+    P_Value = p_values
+  )
+  
+  return(list(result = result, summary_table = summary_table))
+}
+
+# Calculating our model
+choice_col <- 'choice'
+time_cols <- c('time.air', 'time.car', 'time.bus', 'time.train')
+cost_cols <- c('cost.air', 'cost.car', 'cost.bus', 'cost.train')
+initial_params <- rep(0.1, length(time_cols) + 1)
+
+model <- fit_mnl_model(travelmode_wide, choice_col, time_cols,
+                       cost_cols, initial_params)
+
+```
+
+And the model summary Table is
+
+```{r echo=FALSE}
+# Print model summary table
+print(model$summary_table)
+
+```
+
+The interpretation for those results follows exercise 1:
+
+### **Summary:**
+
+-   **Statistical Significance:**
+
+    -   The parameters alpha_car, alpha_bus, b_time, and b_cost are statistically significant at the 5% level.
+
+    -   The parameter alpha_air is not statistically significant at the 5% level, suggesting that the alternative-specific intercept for air travel is not significantly different from zero in this model.
+
+-   **Interpretation of Coefficients:**
+
+    -   **Negative Signs:** The negative signs for the coefficients of time (b_time) and cost (b_cost) are intuitive, indicating that higher travel time and higher travel cost reduce the utility of the respective travel modes.
+
+    -   **Alternative-Specific Intercepts:** The significant negative values for alpha_car and alpha_bus suggest that, relative to the base category (train), car and bus travel have lower utility.
+
+5.  **Conduct a likelihood ratio test on this model to test the joint significance of the alternative-specific intercepts. That is, test the null hypothesis:**
+
+    $$ H_0: \alpha_{\text{air}} = \alpha_{\text{car}} = \alpha_{\text{train}} = 0 $$
+
+Your null hypothesis may be slightly different, depending on what you consider your "reference alternative". Do you reject this null hypothesis? What is the p-value of the test? Briefly interpret the result of this test. (Reminder: to conduct this likelihood ratio test, you need the log-likelihood value of the full model and the log-likelihood value of the restricted model that is obtained when the hypothesized restrictions are imposed.)
+
+**Solution**
+
+```{r}
+# Define the restricted log-likelihood function
+ll_function_restricted <- function(parameters, data, choice_col, time_cols, cost_cols) {
+  # Extract parameters (no alphas in the restricted model)
+  b_time <- parameters[1]
+  b_cost <- parameters[2]
+  
+  # Initialize utilities data frame
+  utilities <- data.frame(
+    utility_air = b_time * data[[time_cols[1]]] + b_cost * data[[cost_cols[1]]],
+    utility_car = b_time * data[[time_cols[2]]] + b_cost * data[[cost_cols[2]]],
+    utility_bus = b_time * data[[time_cols[3]]] + b_cost * data[[cost_cols[3]]],
+    utility_train = b_time * data[[time_cols[4]]] + b_cost * data[[cost_cols[4]]]
+  )
+  
+  # Calculate choice probabilities
+  exp_utilities <- exp(utilities)
+  denom <- rowSums(exp_utilities)
+  probabilities <- exp_utilities / denom
+  
+  # Get the choice probabilities for the chosen alternatives
+  chosen_probs <- mapply(function(row, choice) probabilities[row, choice],
+                         seq_len(nrow(data)),
+                         match(data[[choice_col]],
+                               c('air', 'car', 'bus', 'train')))
+  
+  # Calculate the log-likelihood
+  log_likelihood <- sum(log(chosen_probs))
+  
+  return(-log_likelihood)
+}
+
+# Fit the restricted model
+fit_mnl_model_restricted <- function(data, choice_col, time_cols, cost_cols, initial_params) {
+  ll_func <- function(params) ll_function_restricted(params, data, choice_col,
+                                                     time_cols, cost_cols)
+  result <- optim(par = initial_params, fn = ll_func, method = 'BFGS', hessian = TRUE)
+  
+  # Create a named vector for parameter estimates
+  param_names <- c('b_time', 'b_cost')
+  names(result$par) <- param_names
+  
+  return(result)
+}
+
+# Fitting the restricted model
+initial_params_restricted <- rep(0.1, 2)
+model_restricted <- fit_mnl_model_restricted(travelmode_wide, choice_col, time_cols,
+                                             cost_cols, initial_params_restricted)
+
+```
+
+```{r echo=FALSE}
+# Print restricted model log-likelihood value
+cat(sprintf("Restricted Model Log-Likelihood Value: %.4f\n\n", model_restricted$value))
+
+# Likelihood Ratio Test
+lr_statistic <- 2 * (-model$result$value - -model_restricted$value)
+
+# Test if likelihood ratio test statistic is greater than the critical value
+critical_value <- qchisq(0.95, length(time_cols) - 1)
+lr_test_pass <- lr_statistic > critical_value
+p_value_lr_test <- 1 - pchisq(lr_statistic, df = length(time_cols) - 1)
+
+cat(sprintf("Likelihood Ratio Test Statistic: %.4f\n", lr_statistic))
+cat(sprintf("Critical Value at 95%% confidence level: %.4f\n", critical_value))
+cat(sprintf("Is LR Test Statistic greater than Critical Value? %s\n", ifelse(lr_test_pass, "Yes", "No")))
+cat(sprintf("P-value for the Likelihood Ratio Test: %.4f\n\n", p_value_lr_test))
+
+cat("Interpretation:\n")
+cat(sprintf("The likelihood ratio test statistic is %.4f, \n which is %s the critical value of %.4f.\n",
+            lr_statistic, ifelse(lr_test_pass, "greater than", "less than or equal to"), critical_value))
+cat(sprintf("This indicates that the null hypothesis that the alternative-specific \n intercepts (alpha_air, alpha_car, alpha_bus) are all zero is %s at the 95%% confidence level.\n",
+            ifelse(lr_test_pass, "rejected", "not rejected")))
+cat(sprintf("The p-value for the test is %.4f, which %s 0.05, \n further indicating that the null hypothesis is %s.\n",
+            p_value_lr_test, ifelse(p_value_lr_test < 0.05, "is less than", "is greater than or equal to"),
+            ifelse(p_value_lr_test < 0.05, "rejected", "not rejected")))
+
+```
