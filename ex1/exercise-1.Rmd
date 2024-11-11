@@ -6,6 +6,7 @@ output:
   pdf_document: 
     extra_dependencies: ["fullpage", "amsmath", "amssymb", "amsthm", "enumitem", "cancel", "amsfonts", "inputenc", "xcolor", "mathtools", "pgfplots", "tikz"] 
     latex_engine: xelatex
+    keep_tex: true
   html_document:
     df_print: paged
 bibliography: references.bib
@@ -21,7 +22,7 @@ library(readxl)
 library(mlogit)
 library(gridExtra)
 library(broom)
-library(stargazer)
+library(modelsummary)
 library(AER)
 ```
 
@@ -55,7 +56,7 @@ head(dataset)
 
 Assume that $\sigma_1 = 0$, and $\varepsilon_{ijm} \sim TIEV(\mu, \theta)$, where $\mu>0$ is the scale parameter and $\theta$ is the location parameter of the distribution, i.e. its distribution is $F_{\varepsilon}(x) = exp(-exp(-\mu(x-\theta)))$
 
-Derive the share of each choice in each market.
+### 1.1 Derive the share of each choice in each market.
 
 Since we already observe the market share for each product, we only need to calculate the share for the outside option and add it to the dataset. The outside option's share represents the probability of consumers choosing none of the observed products in each market, defined as $1 - \sum_{j} \text{share}_j$ for each market.
 
@@ -82,7 +83,7 @@ To preview the shares for the outside option across markets:
 head(outside_goods[1:3])
 rm(outside_goods)
 ```
-1.2 Is $\mu$ identified? Why? And what about $\theta$?
+### 1.2  Is $\mu$ identified? Why? And what about $\theta$?
 
 In general, the scale parameter $\mu$ cannot be identified. Suppose that $\varepsilon_{ij} \sim T1EV(\mu_j, \theta_j)$ and $\varepsilon_{ik} \sim T1EV(\mu_k, \theta_k)$ represent the unobserved idiosyncratic utility shocks, where we assume orthogonality between these terms. When we take the difference $\varepsilon_{ik} - \varepsilon_{ij}$, it yields a logistic distribution that depends only on the difference in location parameters $\theta_j - \theta_k$ and not on the scale $\mu$:
 $$
@@ -96,7 +97,7 @@ Thus, $\mu$ cannot be directly identified from this structure since it cancels o
 
 Regarding $\theta$, the location parameter, it is only partially identifiable. By anchoring $\theta$ to an outside option with an observed utility level of zero, we set a baseline against which the utility levels of all other options are identified. This normalization allows us to interpret and identify the utilities of other products relative to the outside good, assuming its utility level is fixed at zero.
 
-1.3 Suppose that $\mu = 1, \theta = 0$. Suppose that you want to estimate the model using OLS.
+### 1.3  Suppose that $\mu = 1, \theta = 0$. Suppose that you want to estimate the model using OLS.
 
 a) Derive the equation you will use to estimate the model.
 
@@ -104,7 +105,7 @@ We first start with the closed logistic formula for the share in each market
 $$
 P(a_i=j|V_{i1},\dots,  V_{i50}) = \frac{exp(V_j)}{\sum_{k=1}^{50}exp(V_k)}
 $$
-Where $V_k$ is the vector of observed characteristics and price. If we divide each probability, whihc is the observed market share, the denominator cancels out, yielding
+Where $V_k$ is the vector of observed characteristics and price. If we divide each probability, wich is the observed market share, the denominator cancels out, yielding
 $$
 \frac{P(a_i=j|V_{i1},\dots,  V_{i50})}{P(a_i=0|V_{i1},\dots,  V_{i50})} = \frac{exp(V_j)}{exp(V_0)}
 $$
@@ -120,54 +121,50 @@ $$
 $$
 ln(\hat{P}(a_i=j|\cdot))-ln(\hat{P}(a_i=0|\cdot)) = \sum_{l=1}^{L}\beta_l (x_{jl}-x_{ol}) + (\xi_j^*)
 $$
-b) Under what conditions the OLS estimator is consistent?
+ b) Under what conditions the OLS estimator is consistent?
 
 The model parameters $\beta$ can only be consistently estimated if the vectors of observed characteristics $V_j$ contains no unknowns or unobservables, as to have no endogeneity problem in the estimation.
 
-1.4 Assume that $\xi_j = 0$. Estimate the parameters of the model by OLS and IV. Compare the estimates of $\alpha$. Does the OLS bias have the expected sign? Explain.
+### 1.4 Assume that $\xi_j = 0$. Estimate the parameters of the model by OLS and IV. Compare the estimates of $\alpha$. Does the OLS bias have the expected sign? Explain.
 
-The folowing code fits the two requested models 
+The following code fits the two requested models 
 ```{r}
-# Step 1: Create the log difference between product shares and the outside option
-
-# Filter to get the outside share for each market
-outside_share <- dataset %>%
-  filter(product == "0") %>%
-  select(market, share) %>%
-  rename(outside_share = share)
-
-# Join with the original dataset to add the outside share to each product row
+# Prepare the dataset with log difference in shares
 dataset_with_outside <- dataset %>%
-  left_join(outside_share, by = "market") %>%
-  filter(product != "0") %>%  # Exclude the outside good itself
+  left_join(dataset %>%
+              filter(product == "0") %>%
+              select(market, share) %>%
+              rename(outside_share = share), 
+            by = "market") %>%
+  filter(product != "0") %>%  # Exclude the outside good
   mutate(log_diff_share = log(share) - log(outside_share))
 
-# Step 2: Estimate the model using OLS with product characteristics (x1 to x4) and price
-
-# Fit the OLS model
+# Fit OLS and IV models
 ols_model <- lm(log_diff_share ~ x1 + x2 + x3 + x4 + price, data = dataset_with_outside)
-
-# Step 3: Define IV model with instrumental variables (IV1-IV6) for endogenous variable (price)
-iv_model <- ivreg(log_diff_share ~ x1 + x2 + x3 + x4 + price | . - price + iv1 + iv2 + iv3 + iv4 + iv5 + iv6, 
+iv_model <- ivreg(log_diff_share ~ x1 + x2 + x3 + x4 + price | 
+                    . - price + iv1 + iv2 + iv3 + iv4 + iv5 + iv6, 
                   data = dataset_with_outside)
 
-
+# Clustered standard errors by product
+ols_se_clustered <- vcovCL(ols_model, cluster = ~product)
+iv_se_clustered <- vcovCL(iv_model, cluster = ~product)
 
 ```
-
-```{r echo=FALSE, warning=FALSE}
-stargazer(ols_model, iv_model, type = "text", title = "Comparison of OLS and IV Model Results",
-          column.labels = c("OLS Model", "IV Model"),
-          covariate.labels = c("Characteristic X1", "Characteristic X2", "Characteristic X3", "Characteristic X4"),
-          dep.var.labels = "Log Difference in Share (Product vs. Outside)",
-          out.header = FALSE,
-          model.names = FALSE)
+```{r echo=FALSE}
+# Model summary with clustered SEs
+modelsummary(list("OLS Model" = ols_model, "IV Model" = iv_model),
+             vcov = list(ols_se_clustered, iv_se_clustered),
+             statistic = "std.error", stars = TRUE,
+             title = "Comparison of OLS and IV Model Results with Clustered SEs",
+             output = "markdown")
 ```
-Controlling for the instruments given yields an $\alpha$ estimand with higher magnitude, this is expected as the endogeneity problem would lower our price coefficient results.
 
 
-1.5 Based on the IV parameters estimated above compute own- and cross-price elasticities for each good
-in market one. Discuss the results
+
+Controlling for the instruments given yields an $\alpha$ estimand with higher magnitude, this is expected as the endogeneity problem would yield an upward bias
+
+
+### 1.5 Based on the IV parameters estimated above compute own- and cross-price elasticities for each good in market one. Discuss the results
 
 The following code calculates the elasticities for market 1
 ```{r}
@@ -215,6 +212,5 @@ for (i in 1:num_products) {
 }
 
 # Print the elasticity matrix
-print(elasticity_matrix[1:5,1:5])
+print(elasticity_matrix[1:10,1:10])
 ```
-

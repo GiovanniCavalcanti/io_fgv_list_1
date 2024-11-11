@@ -1,91 +1,17 @@
----
-title: "Exercise 1.2, Structural Econometrics"
-author: "Giovanni Cavalcanti"
-date: "2024-11-06"
-output:
-  pdf_document: 
-    extra_dependencies: ["fullpage", "amsmath", "amssymb", "amsthm", "enumitem", "cancel", "amsfonts", "inputenc", "xcolor", "mathtools", "pgfplots", "tikz"] 
-    latex_engine: xelatex
-  html_document:
-    df_print: paged
-bibliography: references.bib
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(tidyr)
+library(readxl)
+library(ivreg)
+library(gmm)
 
 rm(list = ls())
 gc()
 
-library(tidyverse)
-library(readxl)
-library(mlogit)
-library(gridExtra)
-library(broom)
-library(modelsummary)
-library(AER)
-library(ivreg)
-library(gmm)
-
-```
-
-# Problem 2: Random Coefficients Logit
-
-------------------------------------------------------------------------
-
-Assume  that $\sigma_1 \neq 0$ and $\epsilon_{ijm} \sim T1EV(1, 0)$. Assume that prices are correlated with $\xi_{jm}$.
-
-### 2.1 Derive the choice probabilities.
-
-We can rewrite the utility function of individual $i$ as:
-
-$$
-U_{ijm} = V_{ijm} + \epsilon_{ijm} \quad ; \quad V_{ij} =(\delta_{jm} + \mu_{ijm} + \xi_{j} + \xi_{jm})
-$$
-where $\delta_{jm} = -\alpha p_{jm} + \sum_{k=1}^4 \beta_k x_{jmk} + \xi_{jm} \quad , \quad \mu_{ijm} = \sigma_1 v_i x_{jm4}$
-
-$\mu_{ijm}$ captures correlation across choices, this correlation depends on characteristics $t$ and unobserved taste shocks $\nu$. So, at any market $m$, the probability of choosing $j$ is given by
-
-$$
-A_{ijm} = \{(\epsilon_i, \beta_i) : V_{ijm} + \epsilon_{im} \geq V_{ikm} + \epsilon_{ikm} \; \forall \; k \neq j \}
-$$
-$$
-P(a_{im} = j) = P(V_{ijm} + \epsilon_{jm} \geq V_{ikm} + \epsilon_{km} \; \forall \; k \neq j)
-$$
-
-Therefore, using the assumption that $\epsilon_i = (\epsilon_1, \ldots, \epsilon_{50})$ is i.i.d. across $J$,
-and the $\beta_i$ vary over $i$ with population density $f(\beta | \theta)$, 
-
-\begin{align*}
-P(a_{im} = j) &= \int_{A_{ijm}} f((\epsilon_i, \beta_i)) \, d(\epsilon_i, \beta_i) \\
-&= \int_{\beta_i} f(\beta_i | \theta) \left( \int_{A_{ijm}} f(\epsilon_i) \, d\epsilon_i \right) d\beta_i \\
-&= \int_{\beta_i} \frac{\exp(\beta_i' x_j)}{\sum_k \exp(\beta_i' x_k)} f(\beta_i | \theta) \, d\beta_i
-\end{align*}
-
-
-### 2.2 Assume for simplicity that $\xi_j = 0$. Estimate the parameters of the model (including $\sigma_1$ and a constant) using a consistent estimator.
-
-First, we load the original dataset for further manipulation.
-
-```{r}
-dataset <- read_excel(path = "dataset_ps1.xlsx") %>%
+# Load the dataset
+dataset <- read_excel(path = "C:/Users/Giovanni Cavalcanti/OneDrive - Insper - Institudo de Ensino e Pesquisa/trimestre_6/fgv_io/list_01/io_fgv_list_1/ex2/dataset_ps1.xlsx") %>%
   mutate(market = as.factor(market),
          product = as.factor(product))
-```
 
-And for our starting guesses for the parameters, we will use the IV estimates from question 1.
-
-```{r include=FALSE}
-iv_model <- ivreg(
-  log(share) - log(1 - ave(share, market, FUN = sum)) ~ x1 + x2 + x3 + x4 + price | 
-    . - price + iv1 + iv2 + iv3 + iv4 + iv5 + iv6,
-  data = dataset
-)
-```
-
-The following code manually implements the BLP estimation procedure, using the gmm package. To do so, a gmm_fn(.) function is defined based on the 3 step procedure described in class.
-
-```{r}
 # Add the outside option
 outside_option <- dataset %>%
   group_by(market) %>%
@@ -98,20 +24,24 @@ outside_option <- dataset %>%
 dataset_with_outside <- bind_rows(dataset, outside_option) %>%
   mutate(product = as.factor(product))
 
+# Fit the instrumental variable model
+iv_model <- ivreg(
+  log(share) - log(1 - ave(share, market, FUN = sum)) ~ x1 + x2 + x3 + x4 + price | 
+    . - price + iv1 + iv2 + iv3 + iv4 + iv5 + iv6,
+  data = dataset
+)
+
 # Load initial parameter guesses from iv_model coefficient
 intercept <- iv_model$coefficients["(Intercept)"]
 alpha <- iv_model$coefficients["price"]
 beta <- iv_model$coefficients[c("x1", "x2", "x3", "x4")]
 sigma <- 0.1  # Initial value for sigma
 
-# Set up initial parameters for GMM estimation
-initial_params <- c(intercept = intercept, alpha = alpha, beta = beta, sigma = sigma)
-
 set.seed(123)  # For reproducibility
 
 # Set up constants
 num_consumers <- 500
-tolerance <- 1e-10  # Set a convergence tolerance
+tolerance <- 1e-6  # Set a convergence tolerance
 max_iterations <- 10000  # Maximum number of iterations
 
 # Generate consumer taste shocks
@@ -172,8 +102,8 @@ gmm_fn <- function(params, data, max_iterations = 10000, tolerance = 1e-6) {
     
     # Check for convergence
     if (delta_diff < tolerance) {
-      # cat("Converged in", iteration, "iterations.\n")
-      # cat("Converged with", params, "\n")
+      cat("Converged in", iteration, "iterations.\n")
+      cat("Converged with", params, "\n")
       break  # Exit the loop if converged
     }
     
@@ -195,6 +125,10 @@ gmm_fn <- function(params, data, max_iterations = 10000, tolerance = 1e-6) {
   return(colMeans(moments))
 }
 
+
+# Set up initial parameters for GMM estimation
+initial_params <- c(intercept = intercept, alpha = alpha, beta = beta, sigma = sigma)
+
 # Perform GMM estimation
 gmm_results <- gmm(
   g = gmm_fn,
@@ -202,22 +136,12 @@ gmm_results <- gmm(
   t0 = initial_params,
   vcov = 'HAC',
   method = 'Nelder-Mead',
-  control = list(reltol = 1e-25, maxit = 100000)
+  control = list(reltol = 1e-25, maxit = 10000)
 )
 
-```
-
-The model results are
-
-```{r echo=FALSE}
 # Display results
 coefs <- coef(gmm_results)
-coefs
-```
 
-### 2.3 Compute own- and cross-price elasticities for each good in market one. Compare with the elasticities obtained in 1.5.
-
-```{r}
 # Constants
 alpha <- coefs['alpha.price'] 
 beta <- coefs[3:6]
@@ -244,8 +168,8 @@ average_shares <- market_data %>%
   group_by(product) %>%
   summarize(s_j = mean(s_ij))
 
-# Sort products in ascending order
-products <- sort(as.numeric(unique(market_data$product)))
+# Create a list of unique products in market one
+products <- unique(market_data$product)
 
 # Initialize an empty matrix to store elasticities
 elasticity_matrix <- matrix(0, nrow = length(products), ncol = length(products),
@@ -256,7 +180,7 @@ for (j in products) {
   # Filter data for product j
   product_data_j <- market_data %>% filter(product == j)
   s_j <- average_shares %>% filter(product == j) %>% pull(s_j)
-  p_j <- product_data_j$price[1]  
+  p_j <- product_data_j$price[1]  # Assuming price is constant across consumers for each product
   
   # Calculate own-price elasticity for product j
   elasticity_matrix[j, j] <- mean((p_j / s_j) * alpha * product_data_j$s_ij * (1 - product_data_j$s_ij))
@@ -269,11 +193,5 @@ for (j in products) {
   }
 }
 
-```
-
-Comparing the new results to those observed in 1.5, the IAA is not valid anymore.
-```{r include=FALSE}
 # Display the elasticity matrix
-print(elasticity_matrix[1:10,1:10])
-```
-
+print(elasticity_matrix)

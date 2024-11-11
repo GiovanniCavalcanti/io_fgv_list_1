@@ -1,0 +1,470 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{cancel}
+\usepackage{amsfonts}
+\usepackage{inputenc}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{tabularray}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx}
+\UseTblrLibrary{booktabs}
+\UseTblrLibrary{rotating}
+\UseTblrLibrary{siunitx}
+\NewTableCommand{\tinytableDefineColor}[3]{\definecolor{#1}{#2}{#3}}
+\newcommand{\tinytableTabularrayUnderline}[1]{\underline{#1}}
+\newcommand{\tinytableTabularrayStrikeout}[1]{\sout{#1}}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Exercise 1.1, Structural Econometrics},
+  pdfauthor={Giovanni Cavalcanti},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Exercise 1.1, Structural Econometrics}
+\author{Giovanni Cavalcanti}
+\date{2024-10-30}
+
+\begin{document}
+\maketitle
+
+\section{Data and model}\label{data-and-model}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+We have a panel with 50 products dispersed over 20 geographic markets.
+For each product, we have its market share, 4 product characteristics,
+prices and 6 instrumental variables for it. The consumer utility is
+defined as
+
+\[
+U_{ijm}= -\alpha p_{jm} + \sum_{k=1}^{3}\beta_k x_{jmk} + \beta_{4i} x_{jm4} + \xi_j + \xi_{jm} + \varepsilon_{ijm}
+\]
+
+where \(i\) denotes individuals, \(j\) denotes choices and \(m\)
+markets. \(\beta_{4i}= \beta_4 + \sigma_1v_1\) and \(v_i \sim N(0, 1)\),
+\(\xi_j\) is a product fixed effect, \(\xi_{jm}\) denotes
+characteristics of product \(j\) at market \(m\) that is observed by
+consumers and firms (but not to the econometrician) and
+\(\varepsilon_{ijm}\) is iid EV across \((i,j,m)\). We further assume
+that there is a outside good such that \(U_{im0}=\varepsilon_{im0}\) for
+each \(m\).
+
+We load the dataset and make preliminary manipulations on it
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dataset }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\AttributeTok{path =} \StringTok{"dataset\_ps1.xlsx"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{market =} \FunctionTok{as.factor}\NormalTok{(market),}
+         \AttributeTok{product =} \FunctionTok{as.factor}\NormalTok{(product))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 14
+##   market product   share    x1    x2    x3    x4   price   iv1   iv2   iv3   iv4
+##   <fct>  <fct>     <dbl> <dbl> <dbl> <dbl> <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1 1      1       0.00541 0.529  1.15     0  1.89 0.00494  5.44  5.40  5.90  5.69
+## 2 1      2       0.00115 0.494  1.28     0  1.94 0.00413  5.89  6.21  6.18  6.11
+## 3 1      3       0.00131 0.468  1.46     0  1.72 0.00590  7.89  7.48  7.77  7.15
+## 4 1      4       0.00133 0.427  1.61     0  1.69 0.00541  7.58  7.33  7.01  7.60
+## 5 1      5       0.00314 0.452  1.65     0  1.50 0.00820  8.93  9.58  8.93  8.95
+## 6 1      6       0.00305 0.451  1.62     0  1.73 0.00616  7.79  7.22  7.37  7.77
+## # i 2 more variables: iv5 <dbl>, iv6 <dbl>
+\end{verbatim}
+
+\section{Problem 1: Multinomial
+Logit}\label{problem-1-multinomial-logit}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Assume that \(\sigma_1 = 0\), and
+\(\varepsilon_{ijm} \sim TIEV(\mu, \theta)\), where \(\mu>0\) is the
+scale parameter and \(\theta\) is the location parameter of the
+distribution, i.e.~its distribution is
+\(F_{\varepsilon}(x) = exp(-exp(-\mu(x-\theta)))\)
+
+\subsubsection{1.1 Derive the share of each choice in each
+market.}\label{derive-the-share-of-each-choice-in-each-market.}
+
+The probability that a consumer \(i\) in market \(m\) chooses product \(j\) is given by:
+\[
+P(a_{im} = j) = P\left(U_{ijm} > U_{ikm}, \; \forall k \neq j\right),
+\]
+where \( U_{ijm} \) is the utility of product \(j\) for consumer \(i\) in market \(m\).
+
+Given the utility specification \( U_{ijm} = V_{ijm} + \varepsilon_{ijm} \) with \( V_{ijm} = \sum_{l=1}^{3} \beta_l x_{jml} + \beta_{4i} x_{jm4} - \alpha p_{jm} \), we assume that \( \varepsilon_{ijm} \sim \text{i.i.d. Type I Extreme Value} \).
+
+Using the properties of the Extreme Value distribution, the choice probability for product \( j \) becomes:
+\[
+P(a_{im} = j) = \frac{\exp(V_{ijm})}{\sum_{k} \exp(V_{ikm})}.
+\]
+This implies that the market share \(s_{jm}\) of product \(j\) in market \(m\) is:
+\[
+s_{jm} = \frac{\exp(V_{jm})}{\sum_{k} \exp(V_{km})}.
+\]
+
+Since we already observe the market share for each product, we only need
+to calculate the share for the outside option and add it to the dataset.
+The outside option's share represents the probability of consumers
+choosing none of the observed products in each market, defined as
+\(1 - \sum_{j} \text{share}_j\) for each market.
+
+The following code calculates this share and appends it to the dataset:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate outside good share and add outside good}
+\NormalTok{outside\_goods }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(market) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}
+    \AttributeTok{product =} \FunctionTok{as.factor}\NormalTok{(}\StringTok{"0"}\NormalTok{),  }\CommentTok{\# Label for outside good}
+    \AttributeTok{share =} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(share),  }\CommentTok{\# Calculated outside share}
+    \AttributeTok{x1 =} \DecValTok{0}\NormalTok{, }\AttributeTok{x2 =} \DecValTok{0}\NormalTok{, }\AttributeTok{x3 =} \DecValTok{0}\NormalTok{, }\AttributeTok{x4 =} \DecValTok{0}\NormalTok{,  }\CommentTok{\# Characteristics set to 0}
+    \AttributeTok{price =} \DecValTok{0}\NormalTok{,  }\CommentTok{\# Price of outside good is 0}
+    \AttributeTok{iv1 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv2 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv3 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv4 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv5 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv6 =} \DecValTok{0}  \CommentTok{\# Instrument variables set to 0}
+\NormalTok{  )}
+
+\CommentTok{\# Bind the outside good rows to the original dataset and arrange by market}
+\NormalTok{dataset }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(dataset, outside\_goods) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(market)}
+\end{Highlighting}
+\end{Shaded}
+
+To preview the shares for the outside option across markets:
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   market product share
+##   <fct>  <fct>   <dbl>
+## 1 1      0       0.433
+## 2 2      0       0.455
+## 3 3      0       0.436
+## 4 4      0       0.463
+## 5 5      0       0.437
+## 6 6      0       0.427
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{1.2 Is \(\mu\) identified? Why? And what
+about
+\(\theta\)?}{1.2 Is \textbackslash mu identified? Why? And what about \textbackslash theta?}}\label{is-mu-identified-why-and-what-about-theta}
+
+In general, the scale parameter \(\mu\) cannot be identified. Suppose
+that \(\varepsilon_{ij} \sim T1EV(\mu_j, \theta_j)\) and
+\(\varepsilon_{ik} \sim T1EV(\mu_k, \theta_k)\) represent the unobserved
+idiosyncratic utility shocks, where we assume orthogonality between
+these terms. When we take the difference
+\(\varepsilon_{ik} - \varepsilon_{ij}\), it yields a logistic
+distribution that depends only on the difference in location parameters
+\(\theta_j - \theta_k\) and not on the scale \(\mu\): \[
+\varepsilon_{ik} - \varepsilon_{ij} \sim \text{Logistic}(\theta_j - \theta_k).
+\] This difference reflects the general case of choosing product \(j\)
+over any other product \(k\) in the market, represented by: \[
+P(a_i = k) = \text{Prob}\left(\varepsilon_{ik} - \varepsilon_{ij} < V_{ij} - V_{ik}, \forall k \neq j\right).
+\] Thus, \(\mu\) cannot be directly identified from this structure since
+it cancels out in the difference.
+
+Regarding \(\theta\), the location parameter, it is only partially
+identifiable. By anchoring \(\theta\) to an outside option with an
+observed utility level of zero, we set a baseline against which the
+utility levels of all other options are identified. This normalization
+allows us to interpret and identify the utilities of other products
+relative to the outside good, assuming its utility level is fixed at
+zero.
+
+\subsubsection{\texorpdfstring{1.3 Suppose that \(\mu = 1, \theta = 0\).
+Suppose that you want to estimate the model using
+OLS.}{1.3 Suppose that \textbackslash mu = 1, \textbackslash theta = 0. Suppose that you want to estimate the model using OLS.}}\label{suppose-that-mu-1-theta-0.-suppose-that-you-want-to-estimate-the-model-using-ols.}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Derive the equation you will use to estimate the model.
+\end{enumerate}
+
+We first start with the closed logistic formula for the share in each
+market \[
+P(a_i=j|V_{i1},\dots,  V_{i50}) = \frac{exp(V_j)}{\sum_{k=1}^{50}exp(V_k)}
+\] Where \(V_k\) is the vector of observed characteristics and price. If
+we divide each probability, wich is the observed market share, the
+denominator cancels out, yielding \[
+\frac{P(a_i=j|V_{i1},\dots,  V_{i50})}{P(a_i=0|V_{i1},\dots,  V_{i50})} = \frac{exp(V_j)}{exp(V_0)}
+\] Taking the logs ob both sides, we linearize it \[
+ln(P(a_i=j|\cdot))-ln(P(a_i=0|\cdot))= V_j-V_0
+\]
+
+Therefore, out estimating equation for this aggregated model is \[
+ln(\hat{P}(a_i=j|\cdot))-ln(\hat{P}(a_i=0|\cdot)) = \sum_{l=1}^{L}\beta_l (x_{jl}-x_{ol}) + (\xi_j-\xi_o)
+\] \[
+ln(\hat{P}(a_i=j|\cdot))-ln(\hat{P}(a_i=0|\cdot)) = \sum_{l=1}^{L}\beta_l (x_{jl}-x_{ol}) + (\xi_j^*)
+\] b) Under what conditions the OLS estimator is consistent?
+
+The model parameters \(\beta\) can only be consistently estimated if the
+vectors of observed characteristics \(V_j\) contains no unknowns or
+unobservables, as to have no endogeneity problem in the estimation.
+
+\subsubsection{\texorpdfstring{1.4 Assume that \(\xi_j = 0\). Estimate
+the parameters of the model by OLS and IV. Compare the estimates of
+\(\alpha\). Does the OLS bias have the expected sign?
+Explain.}{1.4 Assume that \textbackslash xi\_j = 0. Estimate the parameters of the model by OLS and IV. Compare the estimates of \textbackslash alpha. Does the OLS bias have the expected sign? Explain.}}\label{assume-that-xi_j-0.-estimate-the-parameters-of-the-model-by-ols-and-iv.-compare-the-estimates-of-alpha.-does-the-ols-bias-have-the-expected-sign-explain.}
+
+The following code fits the two requested models
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prepare the dataset with log difference in shares}
+\NormalTok{dataset\_with\_outside }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(dataset }\SpecialCharTok{\%\textgreater{}\%}
+              \FunctionTok{filter}\NormalTok{(product }\SpecialCharTok{==} \StringTok{"0"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+              \FunctionTok{select}\NormalTok{(market, share) }\SpecialCharTok{\%\textgreater{}\%}
+              \FunctionTok{rename}\NormalTok{(}\AttributeTok{outside\_share =}\NormalTok{ share), }
+            \AttributeTok{by =} \StringTok{"market"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(product }\SpecialCharTok{!=} \StringTok{"0"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# Exclude the outside good}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log\_diff\_share =} \FunctionTok{log}\NormalTok{(share) }\SpecialCharTok{{-}} \FunctionTok{log}\NormalTok{(outside\_share))}
+
+\CommentTok{\# Fit OLS and IV models}
+\NormalTok{ols\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(log\_diff\_share }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2 }\SpecialCharTok{+}\NormalTok{ x3 }\SpecialCharTok{+}\NormalTok{ x4 }\SpecialCharTok{+}\NormalTok{ price, }\AttributeTok{data =}\NormalTok{ dataset\_with\_outside)}
+\NormalTok{iv\_model }\OtherTok{\textless{}{-}} \FunctionTok{ivreg}\NormalTok{(log\_diff\_share }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2 }\SpecialCharTok{+}\NormalTok{ x3 }\SpecialCharTok{+}\NormalTok{ x4 }\SpecialCharTok{+}\NormalTok{ price }\SpecialCharTok{|} 
+\NormalTok{                    . }\SpecialCharTok{{-}}\NormalTok{ price }\SpecialCharTok{+}\NormalTok{ iv1 }\SpecialCharTok{+}\NormalTok{ iv2 }\SpecialCharTok{+}\NormalTok{ iv3 }\SpecialCharTok{+}\NormalTok{ iv4 }\SpecialCharTok{+}\NormalTok{ iv5 }\SpecialCharTok{+}\NormalTok{ iv6, }
+                  \AttributeTok{data =}\NormalTok{ dataset\_with\_outside)}
+
+\CommentTok{\# Clustered standard errors by product}
+\NormalTok{ols\_se\_clustered }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(ols\_model, }\AttributeTok{cluster =} \SpecialCharTok{\textasciitilde{}}\NormalTok{product)}
+\NormalTok{iv\_se\_clustered }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(iv\_model, }\AttributeTok{cluster =} \SpecialCharTok{\textasciitilde{}}\NormalTok{product)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+\tiny
+\centering
+\begin{talltblr}[         %% tabularray outer open
+caption={Comparison of OLS and IV Model Results with Clustered SEs},
+note{}={+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]},
+column{1}={halign=l,},
+column{2}={halign=c,},
+column{3}={halign=c,},
+hline{14}={1,2,3}{solid, 0.05em, black},
+}                     %% tabularray inner close
+\toprule
+& OLS Model & IV Model \\ \midrule %% TinyTableHeader
+(Intercept) & -7.357***  & -7.424***  \\
+& (0.471)    & (0.472)    \\
+x1          & 0.350      & 0.778*     \\
+& (0.391)    & (0.387)    \\
+x2          & 1.623***   & 1.664***   \\
+& (0.242)    & (0.242)    \\
+x3          & 0.581***   & 0.797***   \\
+& (0.098)    & (0.104)    \\
+x4          & 0.329**    & 0.326**    \\
+& (0.117)    & (0.117)    \\
+price       & -50.024*** & -70.161*** \\
+& (6.157)    & (7.250)    \\
+Num.Obs.    & 1000       & 1000       \\
+R2          & 0.089      & 0.084      \\
+R2 Adj.     & 0.084      & 0.079      \\
+AIC         & 2994.3     & 2999.8     \\
+BIC         & 3028.7     & 3034.1     \\
+Log.Lik.    & -1490.160  &            \\
+RMSE        & 1.07       & 1.08       \\
+Std.Errors  & Custom     & Custom     \\
+\bottomrule
+\end{talltblr}
+\end{table}
+
+Controlling for the instruments given yields an \(\alpha\) estimand with
+higher magnitude, this is expected as the endogeneity problem would
+yield an upward bias
+
+\subsubsection{1.5 Based on the IV parameters estimated above compute
+own- and cross-price elasticities for each good in market one. Discuss
+the
+results}\label{based-on-the-iv-parameters-estimated-above-compute-own--and-cross-price-elasticities-for-each-good-in-market-one.-discuss-the-results}
+
+The following code calculates the elasticities for market 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Select data for market 1}
+\NormalTok{market\_data }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(market }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, product }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{)}
+
+\CommentTok{\# Extract coefficients from the model}
+\NormalTok{alpha\_price }\OtherTok{\textless{}{-}}\NormalTok{ iv\_model}\SpecialCharTok{$}\NormalTok{coefficients[}\StringTok{"price"}\NormalTok{]  }\CommentTok{\# Coefficient for price}
+
+\CommentTok{\# Calculate Own{-}Price Elasticities}
+\NormalTok{market\_data }\OtherTok{\textless{}{-}}\NormalTok{ market\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{own\_price\_elasticity =}\NormalTok{ price }\SpecialCharTok{*}\NormalTok{ alpha\_price }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ share))}
+
+\CommentTok{\# Calculate Cross{-}Price Elasticities}
+\CommentTok{\# Create a dataframe for cross{-}price elasticities}
+\NormalTok{cross\_price\_elasticities }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{j =}\NormalTok{ market\_data}\SpecialCharTok{$}\NormalTok{product, }\AttributeTok{k =}\NormalTok{ market\_data}\SpecialCharTok{$}\NormalTok{product)}
+\NormalTok{cross\_price\_elasticities }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(cross\_price\_elasticities, market\_data[, }\FunctionTok{c}\NormalTok{(}\StringTok{"product"}\NormalTok{, }\StringTok{"price"}\NormalTok{, }\StringTok{"share"}\NormalTok{)], }\AttributeTok{by.x =} \StringTok{"j"}\NormalTok{, }\AttributeTok{by.y =} \StringTok{"product"}\NormalTok{, }\AttributeTok{suffixes =} \FunctionTok{c}\NormalTok{(}\StringTok{"\_j"}\NormalTok{, }\StringTok{"\_k"}\NormalTok{))}
+\NormalTok{cross\_price\_elasticities }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(cross\_price\_elasticities, market\_data[, }\FunctionTok{c}\NormalTok{(}\StringTok{"product"}\NormalTok{, }\StringTok{"price"}\NormalTok{, }\StringTok{"share"}\NormalTok{)], }\AttributeTok{by.x =} \StringTok{"k"}\NormalTok{, }\AttributeTok{by.y =} \StringTok{"product"}\NormalTok{, }\AttributeTok{suffixes =} \FunctionTok{c}\NormalTok{(}\StringTok{"\_j"}\NormalTok{, }\StringTok{"\_k"}\NormalTok{))}
+
+\CommentTok{\# Calculate cross{-}price elasticities}
+\NormalTok{cross\_price\_elasticities }\OtherTok{\textless{}{-}}\NormalTok{ cross\_price\_elasticities }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{cross\_price\_elasticity =} \SpecialCharTok{{-}}\NormalTok{price\_k }\SpecialCharTok{*}\NormalTok{ alpha\_price }\SpecialCharTok{*}\NormalTok{ share\_k)}
+\end{Highlighting}
+\end{Shaded}
+
+The first results for the elasticity matrix are
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a full elasticity matrix}
+\CommentTok{\# Initialize a matrix with NA values}
+\NormalTok{num\_products }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(market\_data)}
+\NormalTok{elasticity\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ num\_products, }\AttributeTok{ncol =}\NormalTok{ num\_products)}
+
+\CommentTok{\# Fill the diagonal with own{-}price elasticities}
+\FunctionTok{rownames}\NormalTok{(elasticity\_matrix) }\OtherTok{\textless{}{-}}\NormalTok{ market\_data}\SpecialCharTok{$}\NormalTok{product}
+\FunctionTok{colnames}\NormalTok{(elasticity\_matrix) }\OtherTok{\textless{}{-}}\NormalTok{ market\_data}\SpecialCharTok{$}\NormalTok{product}
+
+\CommentTok{\# Fill in cross{-}price elasticities}
+\ControlFlowTok{for}\NormalTok{ (row }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(cross\_price\_elasticities)) \{}
+\NormalTok{  j }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(cross\_price\_elasticities}\SpecialCharTok{$}\NormalTok{j[row])}
+\NormalTok{  k }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(cross\_price\_elasticities}\SpecialCharTok{$}\NormalTok{k[row])}
+\NormalTok{  elasticity\_matrix[j, k] }\OtherTok{\textless{}{-}}\NormalTok{ cross\_price\_elasticities}\SpecialCharTok{$}\NormalTok{cross\_price\_elasticity[row]}
+\NormalTok{\}}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{num\_products) \{}
+\NormalTok{  elasticity\_matrix[i, i] }\OtherTok{\textless{}{-}}\NormalTok{ market\_data}\SpecialCharTok{$}\NormalTok{own\_price\_elasticity[i]}
+\NormalTok{\}}
+
+\CommentTok{\# Print the elasticity matrix}
+\FunctionTok{print}\NormalTok{(elasticity\_matrix[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{r|rrrrrrrrrr}
+        & 1           & 2           & 3           & 4           & 5           & 6           & 7           & 8           & 9           & 10          \\
+\hline
+1   & -0.3444  & 0.0003   & 0.0005   & 0.0005   & 0.0018   & 0.0013   & 0.0033   & 0.0630   & 0.0167   & 0.0236 \\
+2   & 0.0019   & -0.2895  & 0.0005   & 0.0005   & 0.0018   & 0.0013   & 0.0033   & 0.0630   & 0.0167   & 0.0236 \\
+3   & 0.0019   & 0.0003   & -0.4133  & 0.0005   & 0.0018   & 0.0013   & 0.0033   & 0.0630   & 0.0167   & 0.0236 \\
+4   & 0.0019   & 0.0003   & 0.0005   & -0.3788  & 0.0018   & 0.0013   & 0.0033   & 0.0630   & 0.0167   & 0.0236 \\
+5   & 0.0019   & 0.0003   & 0.0005   & 0.0005   & -0.5736  & 0.0013   & 0.0033   & 0.0630   & 0.0167   & 0.0236 \\
+6   & 0.0019   & 0.0003   & 0.0005   & 0.0005   & 0.0018   & -0.4308  & 0.0033   & 0.0630   & 0.0167   & 0.0236 \\
+7   & 0.0019   & 0.0003   & 0.0005   & 0.0005   & 0.0018   & 0.0013   & -0.6111  & 0.0630   & 0.0167   & 0.0236 \\
+8   & 0.0019   & 0.0003   & 0.0005   & 0.0005   & 0.0018   & 0.0013   & 0.0033   & -0.6786  & 0.0167   & 0.0236 \\
+9   & 0.0019   & 0.0003   & 0.0005   & 0.0005   & 0.0018   & 0.0013   & 0.0033   & 0.0630   & -0.7500  & 0.0236 \\
+10  & 0.0019   & 0.0003   & 0.0005   & 0.0005   & 0.0018   & 0.0013   & 0.0033   & 0.0630   & 0.0167   & -0.8403 \\
+\end{tabular}
+\caption{Elasticity Matrix for the first 10 goods}
+\end{table}
+
+The elasticity matrix results align with theoretical expectations: own-price elasticities are negative, indicating that an increase in the price of a product leads to a decrease in its demand. Additionally, the cross-price elasticities exhibit the Independence of Irrelevant Alternatives (IIA) property, where a change in the price of one product affects the demand for all other products uniformly. This outcome reinforces the suitability of the multinomial logit model for this analysis, albeit with the known limitation that IIA may oversimplify substitution patterns among products.
+
+\end{document}

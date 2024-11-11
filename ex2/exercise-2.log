@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (MiKTeX 24.4) (preloaded format=xelatex 2024.5.16)  17 MAY 2024 13:25
+This is XeTeX, Version 3.141592653-2.6-0.999996 (MiKTeX 24.4) (preloaded format=xelatex 2024.5.16)  11 NOV 2024 17:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1056,7 +1056,8 @@ File: bkm-dvipdfm.def 2023-12-10 v1.31 bookmark driver for dvipdfm (HO)
 (C:\Users\Giovanni Cavalcanti\AppData\Local\Programs\MiKTeX\tex/latex/xurl\xurl
 .sty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
-) (exercise-2.aux)
+)
+No file exercise-2.aux.
 \openout1 = `exercise-2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 125.
@@ -1454,6 +1455,9 @@ your preamble.
  on input line 125.
 
 Package hyperref Info: Link coloring OFF on input line 125.
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
 (Font)              scaled to size 12.0pt on input line 127.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
@@ -1502,56 +1506,37 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 148.
+(Font)              scaled to size 7.0pt on input line 133.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 148.
+(Font)              scaled to size 5.0pt on input line 133.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 148.
+(Font)              scaled to size 10.00092pt on input line 133.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 148.
+(Font)              scaled to size 7.00064pt on input line 133.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 148.
+(Font)              scaled to size 5.00046pt on input line 133.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 148.
+(Font)              scaled to size 9.99893pt on input line 133.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 148.
+(Font)              scaled to size 6.99925pt on input line 133.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 148.
+(Font)              scaled to size 4.99947pt on input line 133.
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 165.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 176.
 [1
 
 ]
-Underfull \vbox (badness 10000) detected at line 279
+Underfull \vbox (badness 10000) detected at line 310
  []
 
+[2
 
-Underfull \vbox (badness 10000) detected at line 279
- []
+! dvipdfmx:fatal: Unable to open "exercise-2.pdf".
 
-[2] [3]
-Overfull \vbox (0.16997pt too high) detected at line 397
- []
+! No output PDF file written.
 
-[4]
-Overfull \hbox (65.74498pt too wide) in paragraph at lines 431--431
-[]\TU/lmtt/m/n/10 ##  intercepts (alpha_air, alpha_car, alpha_bus) are all zero
- is rejected at the 95% confidence level.[] 
- []
+! Sorry, but "C:\Users\Giovanni Cavalcanti\AppData\Local\Programs\MiKTeX\miktex\bin\x64\xelatex.exe" did not succeed.
 
-[5] (exercise-2.aux)
- ***********
-LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-04-11>
- ***********
- ) 
-Here is how much of TeX's memory you used:
- 39949 strings out of 409500
- 915746 string characters out of 5767934
- 1937406 words of memory out of 5000000
- 61595 multiletter control sequences out of 15000+600000
- 564504 words of font info for 87 fonts, out of 8000000 for 9000
- 1348 hyphenation exceptions out of 8191
- 99i,6n,121p,1009b,495s stack positions out of 10000i,1000n,20000p,200000b,200000s
+! The log file hopefully contains the information to get MiKTeX going again:
 
-Output written on exercise-2.pdf (5 pages).
+!   C:\Users\Giovanni Cavalcanti\AppData\Local\MiKTeX\miktex\log\xelatex.log

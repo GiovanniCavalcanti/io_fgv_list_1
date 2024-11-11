@@ -1,0 +1,411 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{cancel}
+\usepackage{amsfonts}
+\usepackage{inputenc}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Exercise 1.2, Structural Econometrics},
+  pdfauthor={Giovanni Cavalcanti},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Exercise 1.2, Structural Econometrics}
+\author{Giovanni Cavalcanti}
+\date{2024-11-06}
+
+\begin{document}
+\maketitle
+
+\section{Problem 2: Random Coefficients
+Logit}\label{problem-2-random-coefficients-logit}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Assume that \(\sigma_1 \neq 0\) and \(\epsilon_{ijm} \sim T1EV(1, 0)\).
+Assume that prices are correlated with \(\xi_{jm}\).
+
+\subsubsection{2.1 Derive the choice
+probabilities.}\label{derive-the-choice-probabilities.}
+
+We can rewrite the utility function of individual \(i\) as:
+
+\[
+U_{ijm} = V_{ijm} + \epsilon_{ijm} \quad ; \quad V_{ij} =(\delta_{jm} + \mu_{ijm} + \xi_{j} + \xi_{jm})
+\] where
+\(\delta_{jm} = -\alpha p_{jm} + \sum_{k=1}^4 \beta_k x_{jmk} + \xi_{jm} \quad , \quad \mu_{ijm} = \sigma_1 v_i x_{jm4}\)
+
+\(\mu_{ijm}\) captures correlation across choices, this correlation
+depends on characteristics \(t\) and unobserved taste shocks \(\nu\).
+So, at any market \(m\), the probability of choosing \(j\) is given by
+
+\[
+A_{ijm} = \{(\epsilon_i, \beta_i) : V_{ijm} + \epsilon_{im} \geq V_{ikm} + \epsilon_{ikm} \; \forall \; k \neq j \}
+\] \[
+P(a_{im} = j) = P(V_{ijm} + \epsilon_{jm} \geq V_{ikm} + \epsilon_{km} \; \forall \; k \neq j)
+\]
+
+Therefore, using the assumption that
+\(\epsilon_i = (\epsilon_1, \ldots, \epsilon_{50})\) is i.i.d. across
+\(J\), and the \(\beta_i\) vary over \(i\) with population density
+\(f(\beta | \theta)\),
+
+\begin{align*}
+P(a_{im} = j) &= \int_{A_{ijm}} f((\epsilon_i, \beta_i)) \, d(\epsilon_i, \beta_i) \\
+&= \int_{\beta_i} f(\beta_i | \theta) \left( \int_{A_{ijm}} f(\epsilon_i) \, d\epsilon_i \right) d\beta_i \\
+&= \int_{\beta_i} \frac{\exp(\beta_i' x_j)}{\sum_k \exp(\beta_i' x_k)} f(\beta_i | \theta) \, d\beta_i
+\end{align*}
+
+\subsubsection{\texorpdfstring{2.2 Assume for simplicity that
+\(\xi_j = 0\). Estimate the parameters of the model (including
+\(\sigma_1\) and a constant) using a consistent
+estimator.}{2.2 Assume for simplicity that \textbackslash xi\_j = 0. Estimate the parameters of the model (including \textbackslash sigma\_1 and a constant) using a consistent estimator.}}\label{assume-for-simplicity-that-xi_j-0.-estimate-the-parameters-of-the-model-including-sigma_1-and-a-constant-using-a-consistent-estimator.}
+
+First, we load the original dataset for further manipulation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dataset }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\AttributeTok{path =} \StringTok{"dataset\_ps1.xlsx"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{market =} \FunctionTok{as.factor}\NormalTok{(market),}
+         \AttributeTok{product =} \FunctionTok{as.factor}\NormalTok{(product))}
+\end{Highlighting}
+\end{Shaded}
+
+And for our starting guesses for the parameters, we will use the IV
+estimates from question 1.
+
+The following code manually implements the BLP estimation procedure,
+using the gmm package. To do so, a gmm\_fn(.) function is defined based
+on the 3 step procedure described in class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add the outside option}
+\NormalTok{outside\_option }\OtherTok{\textless{}{-}}\NormalTok{ dataset }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(market) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{share =} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(share), }\AttributeTok{.groups =} \StringTok{\textquotesingle{}drop\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{product =} \StringTok{"outside"}\NormalTok{,}
+         \AttributeTok{x1 =} \DecValTok{0}\NormalTok{, }\AttributeTok{x2 =} \DecValTok{0}\NormalTok{, }\AttributeTok{x3 =} \DecValTok{0}\NormalTok{, }\AttributeTok{x4 =} \DecValTok{0}\NormalTok{, }\AttributeTok{price =} \DecValTok{0}\NormalTok{,}
+         \AttributeTok{iv1 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv2 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv3 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv4 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv5 =} \DecValTok{0}\NormalTok{, }\AttributeTok{iv6 =} \DecValTok{0}\NormalTok{)}
+
+\CommentTok{\# Combine the original dataset with the outside option}
+\NormalTok{dataset\_with\_outside }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(dataset, outside\_option) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{product =} \FunctionTok{as.factor}\NormalTok{(product))}
+
+\CommentTok{\# Load initial parameter guesses from iv\_model coefficient}
+\NormalTok{intercept }\OtherTok{\textless{}{-}}\NormalTok{ iv\_model}\SpecialCharTok{$}\NormalTok{coefficients[}\StringTok{"(Intercept)"}\NormalTok{]}
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ iv\_model}\SpecialCharTok{$}\NormalTok{coefficients[}\StringTok{"price"}\NormalTok{]}
+\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ iv\_model}\SpecialCharTok{$}\NormalTok{coefficients[}\FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{, }\StringTok{"x3"}\NormalTok{, }\StringTok{"x4"}\NormalTok{)]}
+\NormalTok{sigma }\OtherTok{\textless{}{-}} \FloatTok{0.1}  \CommentTok{\# Initial value for sigma}
+
+\CommentTok{\# Set up initial parameters for GMM estimation}
+\NormalTok{initial\_params }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{intercept =}\NormalTok{ intercept, }\AttributeTok{alpha =}\NormalTok{ alpha, }\AttributeTok{beta =}\NormalTok{ beta, }\AttributeTok{sigma =}\NormalTok{ sigma)}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)  }\CommentTok{\# For reproducibility}
+
+\CommentTok{\# Set up constants}
+\NormalTok{num\_consumers }\OtherTok{\textless{}{-}} \DecValTok{500}
+\NormalTok{tolerance }\OtherTok{\textless{}{-}} \FloatTok{1e{-}10}  \CommentTok{\# Set a convergence tolerance}
+\NormalTok{max\_iterations }\OtherTok{\textless{}{-}} \DecValTok{10000}  \CommentTok{\# Maximum number of iterations}
+
+\CommentTok{\# Generate consumer taste shocks}
+\NormalTok{taste\_shocks }\OtherTok{\textless{}{-}}\NormalTok{ dataset\_with\_outside }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(market) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{consumer\_id =} \FunctionTok{list}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{num\_consumers)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unnest}\NormalTok{(consumer\_id) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{v\_i =} \FunctionTok{rnorm}\NormalTok{(}\FunctionTok{n}\NormalTok{()))}
+
+\CommentTok{\# Expand dataset with product{-}consumer{-}market combinations}
+\NormalTok{expanded\_dataset }\OtherTok{\textless{}{-}} \FunctionTok{crossing}\NormalTok{(}
+\NormalTok{  dataset\_with\_outside }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(market, product),}
+  \AttributeTok{consumer\_id =} \FunctionTok{unique}\NormalTok{(taste\_shocks}\SpecialCharTok{$}\NormalTok{consumer\_id)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(taste\_shocks, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"market"}\NormalTok{, }\StringTok{"consumer\_id"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(dataset\_with\_outside, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"market"}\NormalTok{, }\StringTok{"product"}\NormalTok{))}
+
+\CommentTok{\# Define the GMM function}
+\NormalTok{gmm\_fn }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(params, data, }\AttributeTok{max\_iterations =} \DecValTok{10000}\NormalTok{, }\AttributeTok{tolerance =} \FloatTok{1e{-}6}\NormalTok{) \{}
+  
+  \CommentTok{\# Extract parameters}
+\NormalTok{  intercept }\OtherTok{\textless{}{-}}\NormalTok{ params[}\StringTok{"intercept.(Intercept)"}\NormalTok{]}
+\NormalTok{  alpha }\OtherTok{\textless{}{-}}\NormalTok{ params[}\StringTok{"alpha.price"}\NormalTok{]}
+\NormalTok{  beta }\OtherTok{\textless{}{-}}\NormalTok{ params[}\FunctionTok{grep}\NormalTok{(}\StringTok{"\^{}beta"}\NormalTok{, }\FunctionTok{names}\NormalTok{(params))]}
+\NormalTok{  sigma }\OtherTok{\textless{}{-}}\NormalTok{ params[}\StringTok{"sigma"}\NormalTok{]}
+  
+  \CommentTok{\# Initialize delta based on the current parameter values}
+\NormalTok{  data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{delta =}\NormalTok{ intercept }\SpecialCharTok{+}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ price }\SpecialCharTok{+}\NormalTok{ beta[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ beta[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ x2 }\SpecialCharTok{+}\NormalTok{ beta[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ x3 }\SpecialCharTok{+}\NormalTok{ beta[}\DecValTok{4}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ x4,}
+           \AttributeTok{mu\_i =}\NormalTok{ sigma }\SpecialCharTok{*}\NormalTok{ v\_i }\SpecialCharTok{*}\NormalTok{ x4)}
+  
+  \CommentTok{\# Main iteration loop to update delta}
+  \ControlFlowTok{for}\NormalTok{ (iteration }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{max\_iterations) \{}
+    
+    \CommentTok{\# Calculate expected utility}
+\NormalTok{    data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{exp\_utility =} \FunctionTok{exp}\NormalTok{(delta }\SpecialCharTok{+}\NormalTok{ mu\_i)) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{group\_by}\NormalTok{(market, consumer\_id) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{total\_exp\_utility =} \FunctionTok{sum}\NormalTok{(exp\_utility)) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{div =}\NormalTok{ exp\_utility }\SpecialCharTok{/}\NormalTok{ total\_exp\_utility) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{group\_by}\NormalTok{(market, product) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{s\_jm =} \FunctionTok{sum}\NormalTok{(div) }\SpecialCharTok{/}\NormalTok{ num\_consumers) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{ungroup}\NormalTok{()}
+    
+    \CommentTok{\# Calculate the new delta values}
+\NormalTok{    data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{delta\_new =}\NormalTok{ delta }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(share) }\SpecialCharTok{{-}} \FunctionTok{log}\NormalTok{(s\_jm))  }\CommentTok{\# Update delta}
+    
+    \CommentTok{\# Check for NA values in delta\_new and delta}
+    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{delta\_new))) \{}
+      \FunctionTok{cat}\NormalTok{(}\StringTok{"NA detected in delta\_new values. Exiting iteration.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{) }
+      \ControlFlowTok{break}
+\NormalTok{    \}}
+    
+    \CommentTok{\# Calculate the maximum difference for convergence check}
+\NormalTok{    delta\_diff }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{delta\_new }\SpecialCharTok{{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{delta), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+    
+    \CommentTok{\# Check for convergence}
+    \ControlFlowTok{if}\NormalTok{ (delta\_diff }\SpecialCharTok{\textless{}}\NormalTok{ tolerance) \{}
+      \CommentTok{\# cat("Converged in", iteration, "iterations.\textbackslash{}n")}
+      \CommentTok{\# cat("Converged with", params, "\textbackslash{}n")}
+      \ControlFlowTok{break}  \CommentTok{\# Exit the loop if converged}
+\NormalTok{    \}}
+    
+    \CommentTok{\# Update delta for the next iteration}
+\NormalTok{    data}\SpecialCharTok{$}\NormalTok{delta }\OtherTok{\textless{}{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{delta\_new}
+\NormalTok{  \}}
+  
+  \CommentTok{\# Define the matrix of instruments (Z)}
+\NormalTok{  Z }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(data[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iv1"}\NormalTok{, }\StringTok{"iv2"}\NormalTok{, }\StringTok{"iv3"}\NormalTok{, }\StringTok{"iv4"}\NormalTok{, }\StringTok{"iv5"}\NormalTok{, }\StringTok{"iv6"}\NormalTok{)])}
+  
+  \CommentTok{\# Compute residuals based on the final delta}
+\NormalTok{  X }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(data[, }\FunctionTok{c}\NormalTok{(}\StringTok{"price"}\NormalTok{, }\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{, }\StringTok{"x3"}\NormalTok{, }\StringTok{"x4"}\NormalTok{)])}
+\NormalTok{  residuals }\OtherTok{\textless{}{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{delta }\SpecialCharTok{{-}}\NormalTok{ X }\SpecialCharTok{\%*\%} \FunctionTok{c}\NormalTok{(alpha, beta)}
+  
+  \CommentTok{\# Calculate the moment conditions}
+\NormalTok{  moments }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(residuals) }\SpecialCharTok{*}\NormalTok{ Z}
+  
+  \CommentTok{\# Return the average of the moments across observations}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{colMeans}\NormalTok{(moments))}
+\NormalTok{\}}
+
+\CommentTok{\# Perform GMM estimation}
+\NormalTok{gmm\_results }\OtherTok{\textless{}{-}} \FunctionTok{gmm}\NormalTok{(}
+  \AttributeTok{g =}\NormalTok{ gmm\_fn,}
+  \AttributeTok{x =}\NormalTok{ expanded\_dataset,}
+  \AttributeTok{t0 =}\NormalTok{ initial\_params,}
+  \AttributeTok{vcov =} \StringTok{\textquotesingle{}HAC\textquotesingle{}}\NormalTok{,}
+  \AttributeTok{method =} \StringTok{\textquotesingle{}Nelder{-}Mead\textquotesingle{}}\NormalTok{,}
+  \AttributeTok{control =} \FunctionTok{list}\NormalTok{(}\AttributeTok{reltol =} \FloatTok{1e{-}25}\NormalTok{, }\AttributeTok{maxit =} \DecValTok{100000}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in FinRes.baseGmm.res(z, Model_info): The covariance matrix of the
+## coefficients is singular
+\end{verbatim}
+
+The model results are
+
+\begin{verbatim}
+## intercept.(Intercept)           alpha.price               beta.x1 
+##           -2.88347845          -71.16020851            1.47127215 
+##               beta.x2               beta.x3               beta.x4 
+##            1.68081209            2.15183723            4.72792619 
+##                 sigma 
+##            0.02315001
+\end{verbatim}
+
+\subsubsection{2.3 Compute own- and cross-price elasticities for each
+good in market one. Compare with the elasticities obtained in
+1.5.}\label{compute-own--and-cross-price-elasticities-for-each-good-in-market-one.-compare-with-the-elasticities-obtained-in-1.5.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Constants}
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ coefs[}\StringTok{\textquotesingle{}alpha.price\textquotesingle{}}\NormalTok{] }
+\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ coefs[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]}
+\NormalTok{sigma }\OtherTok{\textless{}{-}}\NormalTok{ coefs[}\StringTok{\textquotesingle{}sigma\textquotesingle{}}\NormalTok{]   }
+
+\CommentTok{\# Filter data for market 1}
+\NormalTok{market\_data }\OtherTok{\textless{}{-}}\NormalTok{ expanded\_dataset }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(market }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, product }\SpecialCharTok{!=} \StringTok{"outside"}\NormalTok{) }
+
+\CommentTok{\# Calculate individual choice probabilities s\_ij for each product and consumer in market 1}
+\NormalTok{market\_data }\OtherTok{\textless{}{-}}\NormalTok{ market\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(consumer\_id) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{delta =}\NormalTok{ intercept }\SpecialCharTok{+}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ price }\SpecialCharTok{+}\NormalTok{ beta[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ beta[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ x2 }\SpecialCharTok{+}\NormalTok{ beta[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ x3 }\SpecialCharTok{+}\NormalTok{ beta[}\DecValTok{4}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ x4,}
+    \AttributeTok{mu =}\NormalTok{ sigma }\SpecialCharTok{*}\NormalTok{ v\_i }\SpecialCharTok{*}\NormalTok{ x4,}
+    \AttributeTok{exp\_delta\_mu =} \FunctionTok{exp}\NormalTok{(delta }\SpecialCharTok{+}\NormalTok{ mu),}
+    \AttributeTok{total\_exp\_utility =} \FunctionTok{sum}\NormalTok{(exp\_delta\_mu),}
+    \AttributeTok{s\_ij =}\NormalTok{ exp\_delta\_mu }\SpecialCharTok{/}\NormalTok{ total\_exp\_utility}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\CommentTok{\# Calculate average market share for each product (s\_j)}
+\NormalTok{average\_shares }\OtherTok{\textless{}{-}}\NormalTok{ market\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(product) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{s\_j =} \FunctionTok{mean}\NormalTok{(s\_ij))}
+
+\CommentTok{\# Sort products in ascending order}
+\NormalTok{products }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{unique}\NormalTok{(market\_data}\SpecialCharTok{$}\NormalTok{product)))}
+
+\CommentTok{\# Initialize an empty matrix to store elasticities}
+\NormalTok{elasticity\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\AttributeTok{nrow =} \FunctionTok{length}\NormalTok{(products), }\AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(products),}
+                            \AttributeTok{dimnames =} \FunctionTok{list}\NormalTok{(products, products))}
+
+\CommentTok{\# Calculate own{-} and cross{-}price elasticities}
+\ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in}\NormalTok{ products) \{}
+  \CommentTok{\# Filter data for product j}
+\NormalTok{  product\_data\_j }\OtherTok{\textless{}{-}}\NormalTok{ market\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(product }\SpecialCharTok{==}\NormalTok{ j)}
+\NormalTok{  s\_j }\OtherTok{\textless{}{-}}\NormalTok{ average\_shares }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(product }\SpecialCharTok{==}\NormalTok{ j) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(s\_j)}
+\NormalTok{  p\_j }\OtherTok{\textless{}{-}}\NormalTok{ product\_data\_j}\SpecialCharTok{$}\NormalTok{price[}\DecValTok{1}\NormalTok{]  }\CommentTok{\# Assuming price is constant across consumers for each product}
+  
+  \CommentTok{\# Calculate own{-}price elasticity for product j}
+\NormalTok{  elasticity\_matrix[j, j] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((p\_j }\SpecialCharTok{/}\NormalTok{ s\_j) }\SpecialCharTok{*}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ product\_data\_j}\SpecialCharTok{$}\NormalTok{s\_ij }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ product\_data\_j}\SpecialCharTok{$}\NormalTok{s\_ij))}
+  
+  \CommentTok{\# Calculate cross{-}price elasticities for product j with respect to other products k}
+  \ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in}\NormalTok{ products[products }\SpecialCharTok{!=}\NormalTok{ j]) \{}
+\NormalTok{    product\_data\_k }\OtherTok{\textless{}{-}}\NormalTok{ market\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(product }\SpecialCharTok{==}\NormalTok{ k)}
+\NormalTok{    p\_k }\OtherTok{\textless{}{-}}\NormalTok{ product\_data\_k}\SpecialCharTok{$}\NormalTok{price[}\DecValTok{1}\NormalTok{]  }\CommentTok{\# Price of product k}
+\NormalTok{    elasticity\_matrix[j, k] }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FunctionTok{mean}\NormalTok{((p\_k }\SpecialCharTok{/}\NormalTok{ s\_j) }\SpecialCharTok{*}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ product\_data\_j}\SpecialCharTok{$}\NormalTok{s\_ij }\SpecialCharTok{*}\NormalTok{ product\_data\_k}\SpecialCharTok{$}\NormalTok{s\_ij)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Comparing the new results to those observed in 1.5, the IAA is not valid
+anymore.
+
+\begin{table}[h!]
+\tiny
+\centering
+\begin{tabular}{r|rrrrrrrrrr}
+      & 1            & 2            & 3            & 4            & 5            & 6            & 7            & 8            & 9            & 10           \\
+\hline
+1  & -0.347177198  & 0.005299763  & 0.003086103  & 0.003082090  & 0.001784594  & 0.004257424  & 0.007630117  & 0.093878490  & 0.052453340  & 0.033284590 \\
+2  & 0.004048745   & -0.288637041 & 0.003086080  & 0.003082065  & 0.001784572  & 0.004257394  & 0.007630063  & 0.093878900  & 0.052453390  & 0.033284560 \\
+3  & 0.004048802   & 0.005299800  & -0.416630548 & 0.003082177  & 0.001784673  & 0.004257530  & 0.007630307  & 0.093877040  & 0.052453160  & 0.033284700 \\
+4  & 0.004048810   & 0.005299806  & 0.003086196  & -0.381573431 & 0.001784686  & 0.004257548  & 0.007630339  & 0.093876790  & 0.052453120  & 0.033284720 \\
+5  & 0.004048858   & 0.005299845  & 0.003086282  & 0.003082286  & -0.581821559 & 0.004257663  & 0.007630543  & 0.093875240  & 0.052452930  & 0.033284830 \\
+6  & 0.004048799   & 0.005299798  & 0.003086178  & 0.003082172  & 0.001784668  & -0.434034241 & 0.007630296  & 0.093877120  & 0.052453170  & 0.033284690 \\
+7  & 0.004048799   & 0.005299797  & 0.003086178  & 0.003082172  & 0.001784668  & 0.004257524  & -0.615454194 & 0.093877130  & 0.052453170  & 0.033284690 \\
+8  & 0.004048677   & 0.005299697  & 0.003085960  & 0.003081933  & 0.001784453  & 0.004257233  & 0.007629776  & -0.658280020 & 0.052453670  & 0.033284390 \\
+9  & 0.004048713   & 0.005299727  & 0.003086024  & 0.003082004  & 0.001784516  & 0.004257319  & 0.007629930  & 0.093879910  & -0.725158920 & 0.033284480 \\
+10 & 0.004048734   & 0.005299744  & 0.003086061  & 0.003082043  & 0.001784552  & 0.004257368  & 0.007630016  & 0.093879250  & 0.052453430  & -0.842938800 \\
+\end{tabular}
+\caption{Elasticity Matrix for first 10 goods in market 1}
+\end{table}
+
+
+\end{document}
